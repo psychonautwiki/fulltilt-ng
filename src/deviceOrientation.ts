@@ -25,12 +25,12 @@ export class DeviceOrientation {
     static BETA: 'beta';
     static GAMMA: 'gamma';
 
-    data: RotationData;
+    data: RotationData | null;
 
     private active: boolean;
     private options: DeviceOrientationOptions;
 
-    private alphaOffsetDevice: Euler;
+    private alphaOffsetDevice: Euler | null;
     private alphaOffsetScreen: number;
 
     private screenOrientationAngle: number;
@@ -94,9 +94,10 @@ export class DeviceOrientation {
                     && +evt.webkitCompassAccuracy >= 0
                     && +evt.webkitCompassAccuracy < 50
                 ) {
-                    this.alphaOffsetDevice = new Euler(evt.webkitCompassHeading, 0, 0);
-                    this.alphaOffsetDevice.rotateZ(this.screenOrientationAngle);
+                    const alphaOffsetDevice = new Euler(evt.webkitCompassHeading || 0, 0, 0);
+                    alphaOffsetDevice.rotateZ(this.screenOrientationAngle);
 
+                    this.alphaOffsetDevice = alphaOffsetDevice;
                     this.alphaOffsetScreen = this.screenOrientationAngle;
 
                     // Discard first {successThreshold} responses while a better compass lock is found by UA
@@ -183,7 +184,7 @@ export class DeviceOrientation {
         const orientationData: RotationData =
             this.data || { alpha: 0, beta: 0, gamma: 0 };
 
-        let adjustedAlpha = orientationData.alpha;
+        let adjustedAlpha = orientationData.alpha || 0;
 
         if (this.alphaOffsetDevice) {
             matrix.setFromEuler(this.alphaOffsetDevice);
@@ -201,8 +202,8 @@ export class DeviceOrientation {
 
         euler.set(
             adjustedAlpha,
-            orientationData.beta,
-            orientationData.gamma
+            orientationData.beta || 0,
+            orientationData.gamma || 0
         );
 
         quaternion.setFromEuler(euler);
@@ -227,7 +228,7 @@ export class DeviceOrientation {
         const orientationData: RotationData =
             this.data || { alpha: 0, beta: 0, gamma: 0 };
 
-        let adjustedAlpha = orientationData.alpha;
+        let adjustedAlpha = orientationData.alpha || 0;
 
         if (this.alphaOffsetDevice) {
             matrix.setFromEuler(this.alphaOffsetDevice);
@@ -245,8 +246,8 @@ export class DeviceOrientation {
 
         euler.set(
             adjustedAlpha,
-            orientationData.beta,
-            orientationData.gamma
+            orientationData.beta || 0,
+            orientationData.gamma || 0
         );
 
         matrix.setFromEuler(euler);

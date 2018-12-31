@@ -85,8 +85,9 @@ export class Euler {
     };
 
     setFromQuaternion ( q: Quaternion ) {
-
-        let _alpha, _beta, _gamma: number;
+        let _alpha = 0;
+        let _beta = 0;
+        let _gamma = 0;
 
         const sqw = q.w * q.w;
         const sqx = q.x * q.x;

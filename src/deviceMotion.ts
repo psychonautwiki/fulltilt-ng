@@ -15,7 +15,7 @@ import {
 } from './constants';
 
 export class DeviceMotion {
-    data: DeviceMotionData;
+    data: DeviceMotionData | null;
 
     private active: boolean;
     private screenOrientationAngle: number;
@@ -31,7 +31,7 @@ export class DeviceMotion {
         this.screenOrientationAngle = screenOrientationAngle;
     }
 
-    handleDeviceMotionChange = (event: DeviceMotionEvent) => {
+    handleDeviceMotionChange = (event: DeviceMotionEvent & DeviceMotionData) => {
         this.data = event;
 
         this._callbacks.forEach(callback =>
@@ -181,27 +181,31 @@ export class DeviceMotion {
             gamma: 0
         };
 
+        const rotAlpha = rotRateData.alpha || 0;
+        const rotBeta = rotRateData.beta || 0;
+        const rotGamma = rotRateData.gamma || 0;
+
         switch ( this.screenOrientationAngle ) {
             case SCREEN_ROTATION_90:
-                screenRotRateData.beta  = - rotRateData.gamma;
-                screenRotRateData.gamma =   rotRateData.beta;
+                screenRotRateData.beta  = - rotGamma;
+                screenRotRateData.gamma =   rotBeta;
                 break;
             case SCREEN_ROTATION_180:
-                screenRotRateData.beta  = - rotRateData.beta;
-                screenRotRateData.gamma = - rotRateData.gamma;
+                screenRotRateData.beta  = - rotBeta;
+                screenRotRateData.gamma = - rotGamma;
                 break;
             case SCREEN_ROTATION_270:
             case SCREEN_ROTATION_MINUS_90:
-                screenRotRateData.beta  =   rotRateData.gamma;
-                screenRotRateData.gamma = - rotRateData.beta;
+                screenRotRateData.beta  =   rotGamma;
+                screenRotRateData.gamma = - rotBeta;
                 break;
             default: // SCREEN_ROTATION_0
-                screenRotRateData.beta  =   rotRateData.beta;
-                screenRotRateData.gamma =   rotRateData.gamma;
+                screenRotRateData.beta  =   rotBeta;
+                screenRotRateData.gamma =   rotGamma;
                 break;
         }
 
-        screenRotRateData.alpha = rotRateData.alpha;
+        screenRotRateData.alpha = rotAlpha;
 
         return screenRotRateData;
 
