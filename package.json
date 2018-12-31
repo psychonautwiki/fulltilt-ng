@@ -1,0 +1,8 @@
+{
+  "name": "fulltilt-ng",
+  "title": "fulltilt-ng",
+  "version": "1.0.0",
+  "devDependencies": {
+    "typescript": "^3.2.2"
+  }
+}
