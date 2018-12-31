@@ -3,7 +3,7 @@ import { sensorCheck } from './utils';
 import { DeviceMotion } from './deviceMotion';
 
 export class FULLTILT {
-    static version = '1.0.0';
+    static version = '1.0.2';
 
     static async getDeviceOrientation (options: DeviceOrientationOptions) {
         const sensor = new DeviceOrientation(options);
