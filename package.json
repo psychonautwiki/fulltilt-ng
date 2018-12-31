@@ -2,7 +2,7 @@
   "name": "fulltilt-ng",
   "title": "fulltilt-ng",
   "main": "dist/src/index.js",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "devDependencies": {
     "typescript": "^3.2.2"
   }

@@ -31,7 +31,7 @@ export class DeviceMotion {
         this.screenOrientationAngle = screenOrientationAngle;
     }
 
-    handleDeviceMotionChange = (event: DeviceMotionEvent & DeviceMotionData) => {
+    private handleDeviceMotionChange = (event: DeviceMotionEvent & DeviceMotionData) => {
         this.data = event;
 
         this._callbacks.forEach(callback =>
@@ -39,7 +39,7 @@ export class DeviceMotion {
         );
     }
 
-    handleScreenOrientationChange = () => {
+    private handleScreenOrientationChange = () => {
         if ( hasScreenOrientationAPI ) {
             this.screenOrientationAngle = ( window.screen.orientation.angle || 0 ) * degToRad;
 
@@ -126,7 +126,6 @@ export class DeviceMotion {
         screenAccData.z = accData.z;
 
         return screenAccData;
-
     }
 
     getScreenAdjustedAccelerationIncludingGravity () {
@@ -168,7 +167,6 @@ export class DeviceMotion {
     }
 
     getScreenAdjustedRotationRate () {
-
         const rotRateData: RotationData =
             this.data
             && this.data.rotationRate
@@ -208,7 +206,6 @@ export class DeviceMotion {
         screenRotRateData.alpha = rotAlpha;
 
         return screenRotRateData;
-
     }
 
     getLastRawEventData () {

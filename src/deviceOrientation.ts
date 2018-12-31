@@ -52,7 +52,7 @@ export class DeviceOrientation {
         this._init();
     }
 
-    _init() {
+    private _init() {
         const maxTries = 200;
         const successThreshold = 10;
 
@@ -121,7 +121,7 @@ export class DeviceOrientation {
         0 as never;
     }
 
-    handleDeviceOrientationChange = (event: DeviceOrientationEvent) => {
+    private handleDeviceOrientationChange = (event: DeviceOrientationEvent) => {
         this.data = event;
 
         this._callbacks.forEach(callback =>
@@ -129,7 +129,7 @@ export class DeviceOrientation {
         );
     }
 
-    handleScreenOrientationChange = () => {
+    private handleScreenOrientationChange = () => {
         if ( hasScreenOrientationAPI ) {
             this.screenOrientationAngle = ( window.screen.orientation.angle || 0 ) * degToRad;
 
